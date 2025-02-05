@@ -1,0 +1,244 @@
+/* Global Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2a2a2a;
+    --secondary-color: #f5f5f5;
+    --accent-color: #3498db;
+    --transition-speed: 0.5s;
+    --spacing: 1rem;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* Slider Container */
+.slider-container {
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+}
+
+/* Slider */
+.slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: black;
+    aspect-ratio: 16/9;
+}
+
+/* Slide Styling */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+/* Image Styling */
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will maintain aspect ratio while covering the container */
+    filter: brightness(0.7);
+    transform: scale(1.1); /* Slightly larger to prevent white edges during ken burns effect */
+    transition: transform 6s ease-in-out;
+}
+
+.slide.active img {
+    transform: scale(1);
+}
+
+/* Text Overlay Styling */
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    z-index: 2;
+    opacity: 0;
+    transition: all 0.8s ease-out;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* Active Text Overlay */
+.slide.active .text-overlay {
+    opacity: 1;
+    left: 15%;
+}
+
+/* Heading Styling with Responsiveness */
+.text-overlay h2 {
+    font-size: clamp(2rem, 5vw, 4rem); /* Responsive text scaling */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: clamp(0.5rem, 2vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.8s ease-out 0.3s;
+}
+
+/* Paragraph Styling with Responsiveness */
+.text-overlay p {
+    font-size: clamp(1rem, 2vw, 1.2rem); /* Responsive text scaling */
+    margin-bottom: clamp(1rem, 3vw, 2rem);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.8s ease-out 0.5s;
+}
+
+/* Active Heading and Paragraph */
+.slide.active .text-overlay h2,
+.slide.active .text-overlay p {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Discover Button Styling */
+.discover-btn {
+    display: inline-block;
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid white;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.8s ease-out 0.7s;
+}
+
+/* Active Discover Button */
+.slide.active .discover-btn {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Hover Effect for Button */
+.discover-btn:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Navigation Buttons */
+.slider-nav {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    gap: 1rem;
+    z-index: 10;
+}
+
+/* Navigation Button Styling */
+.nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: none;
+    width: clamp(40px, 5vw, 50px);
+    height: clamp(40px, 5vw, 50px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: clamp(1rem, 1.5vw, 1.2rem); /* Responsive icon text */
+    transition: all 0.3s ease;
+}
+
+/* Navigation Button Hover Effect */
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Progress Bar Styling */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    z-index: 10;
+}
+
+/* Progress Bar Width */
+.progress {
+    height: 100%;
+    background: white;
+    width: 0;
+    transition: width 5s linear;
+}
+
+/* Active Progress */
+.slide.active .progress {
+    width: 100%;
+}
+
+/* Mobile Responsiveness (max-width: 768px) */
+@media (max-width: 768px) {
+    .slider {
+        border-radius: 15px;
+    }
+
+    .text-overlay {
+        left: 5%;
+        width: 90%;
+    }
+
+    .slide.active .text-overlay {
+        left: 5%;
+    }
+
+    /* Adjusted font scaling for smaller screens */
+    .text-overlay h2 {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+    }
+
+    .text-overlay p {
+        font-size: clamp(1rem, 3vw, 1.3rem);
+    }
+
+    /* Adjust navigation button positions for mobile */
+    .slider-nav {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
